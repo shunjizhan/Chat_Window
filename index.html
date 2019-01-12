@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link rel="stylesheet" type="text/css" href="jquery.ui.chatbox.css" />
+</head>
+
+<body>
+    <button id="toggleButton">toggle chat box</button>
+    <div id="chat"></div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="jquery.ui.chatbox.js"></script>
+
+<script>
+    var $chat = $("#chat");
+    var box = $chat.chatbox({
+        id:"user1", 
+        title : "simulating voice input...",
+        messageSent : function(id, _, msg) {
+            /*
+                这里我们主要是要用msg参数，就是我们输入的内容
+                所以这里直接api_call(msg)就可以了
+            */
+            console.log(msg);
+
+            // 这一行是加历史记录到chat box里面，跟后端没关
+            $chat.chatbox("option", "boxManager").addMsg(id, msg);
+        }
+    });
+
+    // 按这个按钮可以隐藏/显示chat window
+    $('#toggleButton').click(function() { 
+        box.chatbox("option", "boxManager").toggleBox(); 
+    });
+</script>
+
+</script>
+</html>
