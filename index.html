@@ -15,25 +15,32 @@
 <script src="jquery.ui.chatbox.js"></script>
 
 <script>
-    var $chat = $("#chat");
-    var box = $chat.chatbox({
-        id:"user1", 
-        title : "simulating voice input...",
-        messageSent : function(id, _, msg) {
-            /*
-                这里我们主要是要用msg参数，就是我们输入的内容
-                所以这里直接api_call(msg)就可以了
-            */
-            console.log(msg);
+    var box = null;
+    (function createBox() {
+        var $chat = $("#chat");
+        box = $chat.chatbox({
+            id:"user1", 
+            title : "simulating voice input...",
+            messageSent : function(id, _, msg) {
+                /*
+                    这里我们主要是要用msg参数，就是我们输入的内容
+                    所以这里直接api_call(msg)就可以了
+                */
+                console.log(msg);
 
-            // 这一行是加历史记录到chat box里面，跟后端没关
-            $chat.chatbox("option", "boxManager").addMsg(id, msg);
-        }
-    });
+                // 这一行是加历史记录到chat box里面，跟后端没关
+                $chat.chatbox("option", "boxManager").addMsg(id, msg);
+            }
+        });
+    })();
 
     // 按这个按钮可以隐藏/显示chat window
     $('#toggleButton').click(function() { 
-        box.chatbox("option", "boxManager").toggleBox(); 
+        if (box) {
+            box.chatbox("option", "boxManager").toggleBox();
+        } else {
+            createBox();
+        }    
     });
 </script>
 

@@ -42,6 +42,7 @@
 
 .ui-chatbox-icon {
     float: right;
+    padding-right: 10px;
 }
 
 .ui-chatbox-input-focus {
